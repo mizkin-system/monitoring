@@ -36,13 +36,13 @@ class QUESTION02:
                     df.loc[self.index] = [item_list[1], item_list[0]]
                     self.index = self.index + 1
                 else:
-                    if len((df[df.ip == [1]]).values) >= self.timeout_times:
+                    if (df[df.ip == item_list[1]])["ip"].size >= int(self.timeout_times):
                         # 故障状態のサーバ応答がありましたら、故障とみなし、データ出力する
                         print(u"故障状態のサーバアドレス："+item_list[1])
                         print(u"サーバの故障期間：" + (df[df.ip == item_list[1]]).values[0][1] + "~" + item_list[0])
                         with open('./question2.csv', 'a') as f:
                             writer = csv.writer(f)
-                            writer.writerow([item_list[1], (df[df.ip == item_list[1]]).values[0][1]] + "~" + item_list[0])
+                            writer.writerow([item_list[1], (df[df.ip == item_list[1]]).values[0][1] + "~" + item_list[0]])
                     # 故障状態のデータ削除
                     df = df[df.ip != item_list[1]]
 
@@ -56,5 +56,8 @@ if __name__ == "__main__":
         args = parser.parse_args()
         app = QUESTION02(args.timeout_times)
         app.monitorLog("ping.log")
+    except Exception as e:
+        print("異常終了しました。")
+        print(e)
     except BaseException:
         print(u"引数設定不正で異常終了しました。引数をご確認ください。")
