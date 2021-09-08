@@ -28,7 +28,7 @@ class QUESTION01:
             if line:
                 item_list = line.decode().split(",")
                 if item_list[-1] == '-':
-                    # 最初タイムアウト時のデータ追加
+                    # タイムアウト時のデータ追加
                     df.loc[self.index] = [item_list[1], item_list[0]]
                     self.index = self.index + 1
                 else:
@@ -39,7 +39,7 @@ class QUESTION01:
                         with open('./question1.csv', 'a') as f:
                             writer = csv.writer(f)
                             writer.writerow([item_list[1], (df[df.ip == item_list[1]]).values[0][1] + "~" + item_list[0]])
-                        # 故障状態のデータ削除
+                        # タイムアウト時のデータ削除
                         df = df[df.ip != item_list[1]]
 
             time.sleep(1)
