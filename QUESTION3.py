@@ -6,7 +6,6 @@ import csv
 import subprocess
 import pandas as pd
 import argparse
-# import copy
 
 
 class QUESTION03:
